@@ -40,3 +40,27 @@
 .card-3::-webkit-scrollbar{
   display: none;
 }
+
+.gender-img {
+  width:  70px;
+  height: 70px;
+  padding: 2px;
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.gender-img:hover {
+  opacity:0.6;
+  cursor: pointer;
+}
+
+.gender-img:active {
+  opacity:0.4;
+  cursor: pointer;
+}
+
+input[type=radio]:checked + label > img {
+  border: 5px solid rgb(228, 207, 94);
+}

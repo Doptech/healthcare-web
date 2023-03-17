@@ -13,6 +13,7 @@ import PatientList from "./pages/PatientList";
 import PatientDetails from "./components/PatientDetails";
 import Transaction from "./pages/Transaction";
 import AddNewPatient from "./pages/AddNewPatient";
+import Chats from "./pages/Chats";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/dashboard/list/details" element={<PatientDetails />} />
           <Route path="/dashboard/transaction" element={<Transaction />} />
           <Route path="/dashboard/newpatient" element={<AddNewPatient />} />
+          <Route path="/chats" element={<Chats />} />
         </Routes>
       </ChakraProvider>
     </>

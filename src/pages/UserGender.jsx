@@ -1,52 +1,56 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import next from "../assets/next.png";
+import back from "../assets/back.png";
+import male from "../assets/male.png";
+import female from "../assets/female.png";
+import { Card, CardBody } from "@chakra-ui/react";
 
 const UserGender = () => {
   const [gender, setGender] = useState("");
   const navigate = useNavigate();
   return (
     <>
-      <div className="main-container w-[300px] m-auto ">
-        <div className="text-center h-[500px]">
-          <p className="text-4xl font-bold my-8">What's your Biological Sex?</p>
-          <p>This helps us to suggests medication in respect to your gender</p>
-          <div className="flex justify-evenly">
-            <div>
-              <input
-                type="radio"
-                value="Female"
-                onChange={(e) => setGender(e.target.value)}
-                name={gender}
-                className="p-3 mr-4 border rounded-lg outline-none my-16"
-                placeholder="Enter your Fullname here"
-              />
-              <label>Male</label>
+      <div className="main-container w-[300px] md:w-[500px] h-[500px] m-auto mt-20 items-center">
+        <Card
+          border={"1px solid lightgray"}
+          className="child-container h-full p-6 rounded"
+        >
+          <CardBody>
+            <div className="text-center">
+              <p className="text-3xl font-bold mt-8">What's your Biological Sex?</p>
+              <p className="mt-8">This helps us to suggests medication in respect to your gender</p>
+              <div className="flex justify-around p-4 mt-0 md:mt-8">
+                <input type="radio" name="choice" id="choose-1" value="1" />
+                <label for="choose-1">
+                  <img src={male} className="gender-img" />
+                  <p>Male</p>
+                </label>
+
+                <input type="radio" name="choice" id="choose-2" value="2" />
+                <label for="choose-2">
+                  <img src={female} className="gender-img" />
+                  <p>Female</p>
+                </label>
+              </div>
+              <div className="flex flex-col gap-4 mt-10">
+                <hr />
+                <div className="flex justify-between">
+                  <img
+                    src={back}
+                    className="cursor-pointer icons"
+                    onClick={() => navigate("/dob")}
+                  />
+                  <img
+                    src={next}
+                    className="cursor-pointer icons"
+                    onClick={() => navigate("/details")}
+                  />
+                </div>
+              </div>
             </div>
-            <div>
-              <input
-                type="radio"
-                value="Male"
-                onChange={(e) => setGender(e.target.value)}
-                name={gender}
-                id="male"
-                className="p-3 mr-4 border rounded-lg outline-none my-16 text-lg"
-                placeholder="Enter your Fullname here"
-              />
-              <label>Female</label>
-            </div>
-          </div>
-        </div>
-        <div>
-          <hr />
-          <div className="flex justify-between">
-            <p className="cursor-pointer" onClick={() => navigate("/dob")}>
-              Back
-            </p>
-            <p className="cursor-pointer" onClick={() => navigate("/details")}>
-              Next
-            </p>
-          </div>
-        </div>
+          </CardBody>
+        </Card>
       </div>
     </>
   );

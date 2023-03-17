@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QRcodeGEN from "../components/QrcodeGEN";
 
 const AddNewPatient = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("yash");
   return (
     <div>
       <div className="h-screen flex flex-col flex-1 lg:p-7 border_bottom w-full border p-4 md:p-2  md:justify-center md:items-center">
@@ -16,7 +16,7 @@ const AddNewPatient = () => {
           </p>
           <input
             type="text"
-            disabled
+            // disabled
             placeholder="Add patient code here"
             className="p-4 outline-none border rounded-lg my-7 w-[300px] md:w-[400px] lg:w-[500px]"
             onChange={(e) => setText(e.target.value)}

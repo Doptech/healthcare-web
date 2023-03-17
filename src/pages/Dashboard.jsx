@@ -222,8 +222,6 @@ const Dashboard = ({ value }) => {
             <div className="col-span-3">
               <Card border={"1px solid lightgray"}>
                 <CardBody>
-                    return (
-                      <>
                         <Accordion defaultIndex={[0]} allowMultiple>
                           <AccordionItem>
                             <h2>
@@ -243,8 +241,6 @@ const Dashboard = ({ value }) => {
                             </AccordionPanel>
                           </AccordionItem>
                         </Accordion>
-                      </>
-                    );
                 </CardBody>
               </Card>
             </div>

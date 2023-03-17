@@ -1,53 +1,88 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import next from "../assets/next.png";
+import back from "../assets/back.png";
+import Select from "react-select";
+import { Card, CardBody } from "@chakra-ui/react";
+import { colourOptions } from "../data/data";
 
 const UserAllergy = () => {
   const [allergy, setAllergy] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
   const navigate = useNavigate();
   return (
     <>
-      <div className="main-container w-[300px] m-auto ">
-        <div className="text-center h-[500px]">
-          <p className="text-4xl font-bold mt-8">Any allergies?</p>
-          <div className="m-6 flex flex-col">
-            <div className="m-6 flex gap-4">
-              <input
-                type="checkbox"
-                value="Egg"
-                onChange={(e) => setAllergy(e.target.value)}
-                className="p-4"
+      {/* <div className="main-container w-[300px] m-auto ">
+        <Card className="main-container w-[300px] m-auto">
+          <CardBody>
+            <div className="text-center h-[500px]">
+              <p className="text-4xl font-bold mt-8">Any allergies?</p>
+              <Select
+                defaultValue={[colourOptions[2], colourOptions[3]]}
+                isMulti
+                name="colors"
+                options={colourOptions}
+                className="basic-multi-select"
+                classNamePrefix="select"
               />
-              <label for="vehicle1"> Egg </label>
             </div>
-            <div className="m-6 flex gap-4">
-              <input
-                type="checkbox"
-                value="Fish"
-                onChange={(e) => setAllergy(e.target.value)}
-              />
-              <label for="vehicle2"> Fish </label>
+            <div>
+              <hr />
+              <div className="flex justify-between">
+                <img
+                  src={back}
+                  className="cursor-pointer icons"
+                  onClick={() => navigate("/name")}
+                />
+                <img
+                  src={next}
+                  className="cursor-pointer icons"
+                  onClick={() => navigate("/gender")}
+                />
+              </div>
             </div>
-            <div className="m-6 flex gap-4">
-              <input
-                type="checkbox"
-                value="Milk"
-                onChange={(e) => setAllergy(e.target.value)}
-              />
-              <label for="vehicle3"> Milk </label>
+          </CardBody>
+        </Card>
+        
+        
+      </div> */}
+
+      <div className="main-container w-[300px] md:w-[500px] h-[500px] m-auto mt-20 items-center">
+        <Card
+          border={"1px solid lightgray"}
+          className="child-container h-full p-6 rounded"
+        >
+          <CardBody>
+            <div className="text-center">
+              <p className="text-3xl font-bold">Any allergies?</p>
+              <div className="my-32">
+                <Select
+                  defaultValue={[colourOptions[2], colourOptions[3]]}
+                  isMulti
+                  name="colors"
+                  options={colourOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
             </div>
-          </div>
-        </div>
-        <div>
-          <hr />
-          <div className="flex justify-between">
-            <p className="cursor-pointer" onClick={() => navigate("/details")}>
-              Back
-            </p>
-            <p className="cursor-pointer" onClick={() => navigate("/test")}>
-              Next
-            </p>
-          </div>
-        </div>
+            <div className="flex flex-col gap-4 md:mt-36">
+              <hr />
+              <div className="flex justify-between">
+                <img
+                  src={back}
+                  className="cursor-pointer icons"
+                  onClick={() => navigate("/details")}
+                />
+                <img
+                  src={next}
+                  className="cursor-pointer icons"
+                  onClick={() => navigate("/test")}
+                />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
       </div>
     </>
   );
