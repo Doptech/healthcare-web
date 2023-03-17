@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider } from "@chakra-ui/react";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import UserDob from "./pages/UserDob";
+import UserName from "./pages/UserName";
+import { Route, Routes } from "react-router-dom";
+import UserGender from "./pages/UserGender";
+import UserDetails from "./pages/UserDetails";
+import UserAllergy from "./pages/UserAllergy";
+import Test from "./pages/Test";
+import Dashboard from "./pages/Dashboard";
+import PatientList from "./pages/PatientList";
+import PatientDetails from "./components/PatientDetails";
+import Transaction from "./pages/Transaction";
+import AddNewPatient from "./pages/AddNewPatient";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ChakraProvider>
+        <Routes>
+          <Route path="/name" element={<UserName />} />
+          <Route path="/dob" element={<UserDob />} />
+          <Route path="/gender" element={<UserGender />} />
+          <Route path="/details" element={<UserDetails />} />
+          <Route path="/allergy" element={<UserAllergy />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/list" element={<PatientList />} />
+          <Route path="/dashboard/list/details" element={<PatientDetails />} />
+          <Route path="/dashboard/transaction" element={<Transaction />} />
+          <Route path="/dashboard/newpatient" element={<AddNewPatient />} />
+        </Routes>
+      </ChakraProvider>
+    </>
   );
 }
 

@@ -1,13 +1,42 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Capriola&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.icons{
+  width: 25px;
+  height: 25px;
+  margin-right: 12px;
+}
+
+.sidebar{
+  width: fit-content;
+}
+
+.grey-text{
+  color: #94a3b8;
+}
+
+.circle{
+  height: 15px;
+  width: 15px;
+  background-color: #312e81;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.card-3{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.card-3::-webkit-scrollbar{
+  display: none;
 }
