@@ -17,6 +17,34 @@ import {
 } from "@chakra-ui/react";
 
 const AppointmentTable = () => {
+  const patient ={
+    "_id": {
+      "$oid": "6414171396adb2af3a08e5a4"
+    },
+    "user_id": "R6AziGQwFvNoUTHiSmmwrHhHE7w1",
+    "name": "Om mmm",
+    "birth_date": {
+      "$date": "2002-07-07T00:00:00.000Z"
+    },
+    "age": 21,
+    "sex": "M",
+    "blood_type": "O+",
+    "height": 39,
+    "weight": 62,
+    "alegries": ",",
+    "known_disease": ",",
+    "blood_pressure": "",
+    "blood_glucose": "",
+    "last_assigned_doctor": "",
+    "no_of_appointments": null,
+    "file_id_id": null,
+    "file_title": "",
+    "file_info": "",
+    "file_hocr": "",
+    "file_ner_dict": "",
+    "is_doc_assigned": false,
+    "doctor_id_id": null
+  }
   return (
     <>
       <Card border={"1px solid lightgray"}>
@@ -47,14 +75,14 @@ const AppointmentTable = () => {
                         name={"Mr. ABC XYZ"}
                         src="https://bit.ly/ryan-florence"
                       />
-                      <Text>Mr. ABC XYZ</Text>
+                      <Text>Vikram seth</Text>
                     </Flex>
                   </Td>
                   <Td p={0}>
-                    <Text textAlign={"center"}>Dialy Checkup</Text>
+                    <Text textAlign={"center"}>Daily Checkup</Text>
                   </Td>
                   <Td textAlign={"center"}>
-                    <Text>Dec 14, 2022</Text>
+                    <Text>Jul 14, 2023</Text>
                   </Td>
                 </Tr>
                 <Tr>
@@ -70,14 +98,14 @@ const AppointmentTable = () => {
                         name={"Mr. ABC XYZ"}
                         src="https://bit.ly/ryan-florence"
                       />
-                      <Text>Mr. ABC XYZ</Text>
+                      <Text>Jonith John</Text>
                     </Flex>
                   </Td>
                   <Td  p={0}>
                     <Text textAlign={"center"}>Diabetes Control</Text>
                   </Td>
                   <Td textAlign={"center"}>
-                    <Text>Dec 14, 2022</Text>
+                    <Text>Feb 02, 2023</Text>
                   </Td>
                 </Tr>
                 <Tr>
@@ -92,14 +120,14 @@ const AppointmentTable = () => {
                         name={"Mr. ABC XYZ"}
                         src="https://bit.ly/ryan-florence"
                       />
-                      <Text>Mr. ABC XYZ</Text>
+                      <Text>Krutika Gandhi</Text>
                     </Flex>
                   </Td>
                   <Td  p={0}>
                     <Text textAlign={"center"}>Root Canal</Text>
                   </Td>
                   <Td  p={0}>
-                    <Text textAlign={"center"}>Dec 14, 2022</Text>
+                    <Text textAlign={"center"}>March 02, 2023</Text>
                   </Td>
                 </Tr>
               </Tbody>

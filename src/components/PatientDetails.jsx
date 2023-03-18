@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -15,66 +15,125 @@ import {
 import download from "../assets/download.png";
 
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const PatientDetails = () => {
+  const [file , setFile] = useState(null)
+  const [isData, setIsData] = useState(false)
+  const [apiData , setApiData] = useState(null)
   const navigate = useNavigate();
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    // setImage(URL.createObjectURL(event.target.files[0]))
+  };
+  // console.log('File aayi :', file)
+
+
+// const handleUpload = async (e) => {
+//     e.preventDefault();
+//     const formData = new FormData();
+//     // formData.append("file", videoFile);
+//     try {
+//       // const response = await axios.get("http://127.0.0.1:8000/api/patient-user-info", formData);
+//       const response = await axios.get("http://127.0.0.1:8000/api/patient-user-info");
+//       let data = await response.data;
+//       // setApiData(data)
+//       console.log('DATA AAYA RE',data);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+useEffect(() => {
+  const handleUpload = async () => {
+    const formData = new FormData();
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/patient-user-info");
+      let data = await response.data;
+      // console.log(data.data)
+      setApiData(data)
+      setIsData(true)
+      // console.log('DATA AAYA RE',data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  handleUpload(); // Call the function here
+}, []);
+console.log('APIDATA :',apiData)
+console.log('isData ? :',isData)
+  
   return (
     <>
       <div className="grid sm:grid-cols-1 lg:grid-cols-2 w-full border-slate-300">
         {/* for large lg: grid-cols-3  */}
         <div className="cols-span-1 p-2 w-full block md:flex lg:block">
           <div className="card-1 w-full mb-2">
-            <Card
-              border={"1px solid lightgray"}
-              p={1}
-              colSpan={1}
-              className="lg:mx-6 lg:mb-6"
-            >
-              <CardBody>
-                <Box textAlign={"center"}>
-                  <Avatar
-                    size="lg"
-                    my={1}
-                    name="Ryan Florence"
-                    src="https://bit.ly/ryan-florence"
-                  />
-                  <Text fontWeight={700} fontSize={"1.2rem"} p={1}>
-                    Ryan Florence
-                  </Text>
-                  <Text p={1}>Patient ID: 12345</Text>
-                  <Text p={1}>Address</Text>
-                </Box>
-                <Flex justifyContent={"space-evenly"} textAlign={"center"}>
-                  <Box>
-                    <Text fontSize={"1.6rem"}>15</Text>
-                    <Text>Appointments</Text>
-                  </Box>
-                  <Divider orientation={"vertical"} h="50px" />
-                  <Box>
-                    <Text fontSize={"1.6rem"}>12</Text>
-                    <Text>Completed</Text>
-                  </Box>
-                </Flex>
+            {
+               isData ? (
+                      <>
+                          <Card
+                            border={"1px solid lightgray"}
+                            p={1}
+                            colSpan={1}
+                            className="lg:mx-6 lg:mb-6"
+                          >
+                            <CardBody>
+                              <Box textAlign={"center"}>
+                                <Avatar
+                                  size="lg"
+                                  my={1}
+                                  name="Ryan Florence"
+                                  src="https://bit.ly/ryan-florence"
+                                />
+                                <Text fontWeight={700} fontSize={"1.2rem"} p={1}>
+                                  {apiData.data.name}
+                                </Text>
+                                <Text p={1}>Patient ID: 12345</Text>
+                                <Text p={1}>Address</Text>
+                              </Box>
+                              <Flex justifyContent={"space-evenly"} textAlign={"center"}>
+                                <Box>
+                                  <Text fontSize={"1.6rem"}>{apiData.data.no_of_appointment}</Text>
+                                  <Text>Appointments</Text>
+                                </Box>
+                                <Divider orientation={"vertical"} h="50px" />
+                                <Box>
+                                  <Text fontSize={"1.6rem"}>12</Text>
+                                  <Text>Completed</Text>
+                                </Box>
+                              </Flex>
 
-                <Flex className="my-2 w-full items-center">
-                  <Button colorScheme="twitter" className="mx-auto">
-                    Message patient
-                  </Button>
-               
-              
-                  <Button colorScheme="gray" className="mx-auto">
-                    <Flex  w-full items-center>
-                      <Img src={download} className="icons" />
-                      <Text>Download Report</Text>
-                    </Flex>
-                  </Button>
-                  </Flex>
-              </CardBody>
-            </Card>
+                              <Flex className="my-2 w-full items-center">
+                                <Button colorScheme="twitter" className="mx-auto">
+                                  Message patient
+                                </Button>
+                            
+                            
+                                <Button colorScheme="gray" className="mx-auto">
+                                  <Flex  w-full items-center>
+                                    <Img src={download} className="icons" />
+                                    <Text>Download Report</Text>
+                                  </Flex>
+                                </Button>
+                                </Flex>
+                            </CardBody>
+                          </Card>
+                      </>
+                    
+                  )
+               :(
+                <h1>ERROR</h1>
+               )
+            }
+            
           </div>
-
+            
           <div className="card-2 mx-auto w-full h-[300px] md:pl-2 lg:pl-0">
-            <Card border={"1px solid lightgray"} px={2} className="lg:mx-6">
+          {
+               isData ? (
+                    
+                      <>
+                          <Card border={"1px solid lightgray"} px={2} className="lg:mx-6">
               <CardBody>
                 <Text p={2} fontWeight={700} fontSize={"1.2rem"}>
                   Patient Information
@@ -82,19 +141,19 @@ const PatientDetails = () => {
                 <Box>
                   <Flex justifyContent={"space-around"} p={2} gap={8}>
                     <Text className="grey-text">Weight</Text>
-                    <Text>60 kg</Text>
+                    <Text>{apiData.data.weight} kg</Text>
                   </Flex>
                   <Flex justifyContent={"space-around"} p={2} gap={8}>
                     <Text className="grey-text">Height</Text>
-                    <Text>1.75m</Text>
+                    <Text>{apiData.data.height}m</Text>
                   </Flex>
                   <Flex justifyContent={"space-around"} p={2} gap={8}>
                     <Text className="grey-text">Blood Type</Text>
-                    <Text>O+ (positive)</Text>
+                    <Text>{apiData.data.blood_type} (positive)</Text>
                   </Flex>
                   <Flex justifyContent={"space-around"} p={2}>
                     <Text className="grey-text">Blood pressure</Text>
-                    <Text>124/79 mmHd</Text>
+                    <Text>{apiData.data.blood_pressure == '' ? ('None'):null}</Text>
                   </Flex>
                   <Flex justifyContent={"space-around"} p={2}>
                     <Text className="grey-text">Blood Glucose</Text>
@@ -106,11 +165,19 @@ const PatientDetails = () => {
                   </Flex>
                   <Flex justifyContent={"space-around"} p={2}>
                     <Text className="grey-text">Allergies</Text>
-                    <Text>Peanut</Text>
+                    <Text>No Allergies</Text>
                   </Flex>
                 </Box>
               </CardBody>
             </Card>
+                      </>
+                    )
+                  
+               :(
+                <h1>ERROR</h1>
+               )
+            }
+            
           </div>
         </div>
 

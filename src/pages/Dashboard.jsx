@@ -1,7 +1,7 @@
 import LineChart from "../Charts/LineChart";
 import { useDisclosure } from "@chakra-ui/react";
 import AppointmentTable from "../components/AppointmentTable";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dashboard from "../assets/dashboard.png";
 import patients from "../assets/patient.png";
 import appointment from "../assets/appointment.png";
@@ -9,10 +9,11 @@ import { useNavigate } from "react-router";
 import settings from "../assets/settings.png";
 import logoutPic from "../assets/logout.png";
 import report from "../assets/create-report.png";
-// import qr from "../assets/qr.png";
+import qr from "../assets/qr.png";
 import hamburger from "../assets/hamburger.png";
 import QRCode from "react-qr-code";
 import QRcodeGEN from "../components/QrcodeGEN";
+import axios from 'axios'
 import {
   Accordion,
   Box,
@@ -31,15 +32,93 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Avatar,
+  Flex,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
+// import { Consumer } from "../context/QRContext";
+import AddNewPatient from "./AddNewPatient";
 
 const Dashboard = ({ value }) => {
   const [open, setOpen] = useState(true);
   const [text, setText] = useState("");
   const [search, setSearch] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isShow, onShow, onShowClose } = useDisclosure();
   const btnRef = React.useRef();
   const navigate = useNavigate();
+  const patient ={
+    "_id": {
+      "$oid": "6414171396adb2af3a08e5a4"
+    },
+    "user_id": "R6AziGQwFvNoUTHiSmmwrHhHE7w1",
+    "name": "Om mmm",
+    "birth_date": {
+      "$date": "2002-07-07T00:00:00.000Z"
+    },
+    "age": 21,
+    "sex": "M",
+    "blood_type": "O+",
+    "height": 39,
+    "weight": 62,
+    "alegries": ",",
+    "known_disease": ",",
+    "blood_pressure": "",
+    "blood_glucose": "",
+    "last_assigned_doctor": "",
+    "no_of_appointments": null,
+    "file_id_id": null,
+    "file_title": "",
+    "file_info": "",
+    "file_hocr": "",
+    "file_ner_dict": "",
+    "is_doc_assigned": false,
+    "doctor_id_id": null
+  }
+
+  const doctor = {
+    "_id": {
+      "$oid": "64148351ac3af7afc9283778"
+    },
+    "id": 1,
+    "docter_user_id": "786283473",
+    "name": "Vurshali Chaudhari",
+    "studies": "MBBS",
+    "specality": "Oconlogy",
+    "hospital": "Shreyas Hospital Panvel",
+    "yrs_of_exp": 13,
+    "qr_id": "4322324213"
+  }
+
+  const chats ={
+    "_id": {
+      "$oid": "6414922ef84d1726bb7beedc"
+    },
+    "message_id": 2,
+    "chat_id_id": 1,
+    "user_query": "I am 25 years old. I am suffering from high blood pressure. Now I am going through a severe headache, full of anxiety, and I cannot concentrate on anything properly.My ears sound like a beep. My ECG and sugar levels are normal. My blood pressure is normally 140/90 mm of Hg",
+    "timestamp": {
+      "$date": "2023-03-17T16:15:42.596Z"
+    },
+    "model_answer": "Your headaches are due to uncontrolled high blood pressure, so we have to fix that. If you are not taking any medications, you must take them",
+    "alert": false,
+    "answer_severity": ""
+  }
+  
   const Menus = [
     { title: "Dashboard", src: "dashboard" },
     { title: "Patient List", src: "Chat" },
@@ -142,26 +221,26 @@ const Dashboard = ({ value }) => {
               <span className="font-bold">Doc</span>trin
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className="md:flex gap-4">
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               // name={search}
-              className="p-3 border rounded-lg outline-none w-full"
+              className="border rounded-lg outline-none w-full p-2 mb-2 md:mb-0"
               placeholder="Search"
               required
             />
-            <button className="bg-pink-400 rounded text-white px-8">
+            <button className="bg-pink-400 rounded text-white p-2 w-full md:w-fit md:px-8">
               Search
             </button>
           </div>
-          <h1 className="text-3xl font-semibold py-4">Hello DOC !</h1>
+          <h1 className="text-3xl font-semibold py-4">Hello {doctor.name} !</h1>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="col-span-1 md:col-span-2">
-              <Card border={"1px solid lightgray"} className="w-full">
+              <Card border={"1px solid lightgray"} className="w-full m-auto">
                 <CardBody>
-                  <div className="flex gap-4 mb-2 w-fit">
+                  <div className="flex gap-4 w-fit">
                     <p className="font-semibold text-xl">Patients</p>
                     <Tag colorScheme={"teal"} className="px-6">
                       +24.24
@@ -205,11 +284,11 @@ const Dashboard = ({ value }) => {
               <AppointmentTable />
             </div>
             <div>
-              <Card border={"1px solid lightgray"}>
+              <Card border={"1px solid lightgray"} className="h-full m-auto">
                 <CardBody>
                   <img
                     src={report}
-                    className="h-full w-[220px] mx-auto cursor-pointer"
+                    className="w-[100px] mx-auto mt-16 cursor-pointer"
                     onClick={(e) => {
                       addFile();
                     }}
@@ -219,42 +298,94 @@ const Dashboard = ({ value }) => {
             </div>
           </div>
           <div className="grid md:grid-cols-4 my-4 gap-4">
-            <div className="col-span-3">
+            <div className="md:col-span-3">
               <Card border={"1px solid lightgray"}>
                 <CardBody>
-                        <Accordion defaultIndex={[0]} allowMultiple>
-                          <AccordionItem>
-                            <h2>
-                              <AccordionButton>
-                                <Box as="span" flex="1" textAlign="left">
-                                  Section 1 title
-                                </Box>
-                                <AccordionIcon />
-                              </AccordionButton>
-                            </h2>
-                            <AccordionPanel pb={4}>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Ut enim ad minim veniam,
-                              quis nostrud exercitation ullamco laboris nisi ut
-                              aliquip ex ea commodo consequat.
-                            </AccordionPanel>
-                          </AccordionItem>
-                        </Accordion>
+                  <Accordion defaultIndex={[0]} allowMultiple>
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton>
+                          <Box as="span" flex="1" textAlign="left">
+                            <Text className="py-2 text-xl font-semibold">Alerts</Text>
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <TableContainer
+                          w={{ sm: "100%", md: "100%", lg: "100%" }}
+                          className="rounded"
+                        >
+                          <Table variant="simple">
+                            <Thead>
+                              <Tr className="bg-slate-200">
+                                <Th textAlign={"center"} className="my-2">Patient</Th>
+                                <Th textAlign={"center"} className="my-2">Appointment</Th>
+                                <Th textAlign={"center"} className="my-2">Status</Th>
+                                <Th textAlign={"center"} className="my-2">Date</Th>
+                              </Tr>
+                            </Thead>
+                            <Tbody>
+                              <Tr>
+                                <Td p={0}>
+                                  <Flex
+                                    alignItems={"center"}
+                                    gap={4}
+                                    justifyContent={"center"}
+                                  >
+                                    <Avatar
+                                      size="sm"
+                                      name={"Mr. ABC XYZ"}
+                                      src="https://bit.ly/ryan-florence"
+                                    />
+                                    <Text>{patient.name}</Text>
+                                  </Flex>
+                                </Td>
+                                <Td p={0}>
+                                  <Text textAlign={"center"}>Dialy Checkup</Text>
+                                </Td>
+                                <Td textAlign={"center"}>
+                                  <Tag colorScheme={'red'} className="px-2">High</Tag>
+                                </Td>
+                                <Td textAlign={"center"}>
+                                  <Text>{chats.timestamp.$date}</Text>
+                                </Td>
+                              </Tr>
+                            </Tbody>
+                          </Table>
+                        </TableContainer>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
                 </CardBody>
               </Card>
             </div>
             <div>
-              <Card border={"1px solid lightgray"}>
+              <Card border={"1px solid lightgray"} className="h-full">
                 <CardBody>
-                  {/* <img
-                    src={qr}
-                    className="w-[125px] mx-auto cursor-pointer"
-                    onClick={(e) => {
-                      scanqr();
-                    }}
-                  /> */}
-                  {/* <QRCode value={value} /> */}
+                  <Button className="mt-20 ml-10" onClick={onOpen} bg={'none'} _hover={{bg: 'none'}} >
+                    <img
+                      src={qr}
+                      className="w-[125px] mx-auto cursor-pointer"
+                    />
+                  </Button>
+                  <Modal isOpen={isShow} onClose={onShow}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Modal Title</ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <AddNewPatient />
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button colorScheme='blue' mr={3} onClick={onShowClose}>
+                          Close
+                        </Button>
+                        <Button variant='ghost'>Secondary Action</Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
                 </CardBody>
               </Card>
             </div>

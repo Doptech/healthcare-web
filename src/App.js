@@ -14,13 +14,15 @@ import PatientDetails from "./components/PatientDetails";
 import Transaction from "./pages/Transaction";
 import AddNewPatient from "./pages/AddNewPatient";
 import Chats from "./pages/Chats";
-
+import UserSignin from './pages/UserSignin'
+import UserSignup from './pages/UserSignup'
 function App() {
   return (
     <>
       <ChakraProvider>
         <Routes>
           <Route path="/name" element={<UserName />} />
+          <Route path="/usersignup" element={<UserSignup/>}/>
           <Route path="/dob" element={<UserDob />} />
           <Route path="/gender" element={<UserGender />} />
           <Route path="/details" element={<UserDetails />} />
