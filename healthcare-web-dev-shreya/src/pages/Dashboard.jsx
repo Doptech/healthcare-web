@@ -56,7 +56,6 @@ const Dashboard = ({ value }) => {
   const [text, setText] = useState("");
   const [search, setSearch] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isShow, onShow, onShowClose } = useDisclosure();
   const btnRef = React.useRef();
   const navigate = useNavigate();
   const Menus = [
@@ -309,21 +308,14 @@ const Dashboard = ({ value }) => {
                       className="w-[125px] mx-auto cursor-pointer"
                     />
                   </Button>
-                  <Modal isOpen={isShow} onClose={onShow}>
+
+                  <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
-                    <ModalContent>
-                      <ModalHeader>Modal Title</ModalHeader>
+                    <ModalContent className="h-fit">
                       <ModalCloseButton />
                       <ModalBody>
                         <AddNewPatient />
                       </ModalBody>
-
-                      <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onShowClose}>
-                          Close
-                        </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
-                      </ModalFooter>
                     </ModalContent>
                   </Modal>
                 </CardBody>
