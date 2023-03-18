@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Capriola&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.icons{
+  width: 25px;
+  height: 25px;
+  margin-right: 12px;
+}
+
+.sidebar{
+  width: fit-content;
+}
+
+.grey-text{
+  color: #94a3b8;
+}
+
+.circle{
+  height: 15px;
+  width: 15px;
+  background-color: #312e81;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.card-3{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.card-3::-webkit-scrollbar{
+  display: none;
+}
+
+.gender-img {
+  width:  70px;
+  height: 70px;
+  padding: 2px;
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.gender-img:hover {
+  opacity:0.6;
+  cursor: pointer;
+}
+
+.gender-img:active {
+  opacity:0.4;
+  cursor: pointer;
+}
+
+input[type=radio]:checked + label > img {
+  border: 5px solid rgb(228, 207, 94);
+}
